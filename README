@@ -1,0 +1,3 @@
+ SolrFlexView
+
+Node.js/backbone based flexible search tool/viewer for searching for documents & metadata accross multiple SOLR cores
