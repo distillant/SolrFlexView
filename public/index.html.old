@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Offline Litigation Database viewer</title>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script>
+</head>
+<body>
+<a href="#logout">UserName</a>
+<a href="#settings">Settings</a>
+<div id="coresList" ><h1>Databases Currently Available</h1>
+    <ul>
+
+
+    </ul>
+    <div>database Details
+        <div id="coreDetails"></div>
+
+    </div>
+</div>
+
+<select id="fieldDropdown">
+
+</select>
+<a href="#Configure DBs">Configure Databases</a>
+
+
+
+
+</body>
+
+<script type="text/javascript">
+    var cores;
+   $.getJSON("/coreList",
+   function(data){
+
+       cores = data.status;
+        for (var core in cores)
+        {
+            var outputLine = "<li><a href='#info'>"+ cores[core].name +"</a> <a href='#'>Search</a></li>";
+            $('#coresList ul').append(outputLine );
+        }
+   }
+    );
+
+   $("ul").on("click","li", function(){
+       var outputText;
+       var coreData=cores['CCPaper'];
+       for(var coreItem in coreData )
+       {
+           var CurrentItem =coreData[coreItem];
+           outputText += "<li>"+coreItem + ":"+CurrentItem +" </li>";
+       }
+       $("#coreDetails").html(outputText);
+   });
+   $.getJSON("/fields",
+           function(data){
+
+               var fields= data.fields;
+               for (var field in fields)
+               {
+                   var outputLine = "<option>" + field+" type: "+ fields[field].type+"</option>";
+                   $('#fieldDropdown').append(outputLine );
+               }
+           }
+   );
+
+</script>
+</html>

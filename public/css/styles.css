@@ -1,0 +1,44 @@
+body {
+    font-family: source-sans-pro, sans-serif;
+    font-size: 15px;
+    /*padding-top: 60px;*/
+    /*padding-bottom: 40px;*/
+}
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow: auto;
+    width: 230px;
+}
+
+.list-item {
+    padding-top: 6px;
+    padding-left: 56px;
+}
+
+.no-reports {
+    display: none;
+}
+
+#resultsTable table
+{
+    border-collapse:collapse;
+}
+#resultsTable tr,#resultsTable th, #resultsTable td
+{
+    border: 1px solid black;
+}
+
+#queryResultsView
+{
+    overflow-y:scroll;
+    width:70%;
+    resize: horizontal;
+    float: left;
+    font-size: 10pt;
+}
+#recordView{
+    float: left;
+}
+
+

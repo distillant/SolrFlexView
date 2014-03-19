@@ -1,0 +1,57 @@
+html, body {
+    height: 100%;
+}
+#mainViewPane
+{
+    float:left;
+    height:100%;
+    resize: horizontal;
+    width:800px;
+}
+
+#tiffSidebar
+{
+    float:left;
+    background-color:lightgrey;
+    width: 200px;
+    overflow-y:auto;
+    height:100%;
+    resize: horizontal;
+}
+#tiffViewer
+{
+    height:100%;
+}
+#tiffControlBar
+{
+    background-color:lightgrey;
+    border:solid 1px grey;
+    padding:5px;
+
+}
+#tiffSidebar .mini-page-item
+{
+    background:white;
+    width: 120px;
+    height: 160px;
+    margin: 25px;
+}
+
+#tiffViewSpace
+{
+    border:solid 1px grey;
+    height:100%;
+    overflow:hidden;
+}
+#tiffControlBar select
+{
+    width: 100px;
+}
+.icon-zoom-in
+{
+    padding: 3px;
+}
+.icon-zoom-out
+{
+    padding: 3px;
+}

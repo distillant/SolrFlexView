@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tiff Viewer</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"> </link>
+    <link rel="stylesheet" type="text/css" href="css/viewer.css"> </link>
+
+
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a href="#">tiffViewer</a>
+    </li>
+    <li><a href="#">NativeViewer</a></li>
+    <li><a href="#">OCR/Extracted text</a></li>
+</ul>
+<div id="ViewersContainer">
+
+</div>
+<div id="tiffViewer">
+    <div id="tiffSidebar">
+        <!--
+        <div class="mini-page-item">
+            <div class="preview-page-num">Page 1</div>
+            <div class="mini-page-view"><img src="/Image/CC-VFR/oausdoeutoeuwt/1"></div>
+
+        </div>
+        <div class="mini-page-item">
+           <div class="preview-page-num">PAge 2</div>
+            <div class="mini-page-view"><img src="/Image/CC-VFR/oausdoeutoeuwt/2"></div>
+
+        </div>
+        -->
+    </div>
+    <div id="mainViewPane">
+        <div id="tiffControlBar">
+            <div class="icon-fast-backward"></div>
+            <div class="icon-backward"></div>
+            Page: <select id="pageNumber"><option>0 of 0</option></select>
+            <div class="icon-forward"></div>
+            <div class="icon-fast-forward"></div>
+            Zoom Level: <select id="ZoomLevel">
+                <option value="200">200%</option>
+                <option value="150">150%</option>
+                <option selected="selected" value="100">100%</option>
+                <option value="70">70%</option>
+                <option value="40">40%</option>
+                <option value="20">20%</option>
+                <option value="10">10%</option>
+            </select>
+            <div class="icon-zoom-in"></div>
+            <div class="icon-zoom-out"></div>
+            <div class="icon-repeat" alt="rotate"></div>
+        </div>
+        <div id="tiffViewSpace">
+            <img >
+        </div>
+    </div>
+    <div style="clear:both"></div>
+</div>
+<div id="OCRView" ></div>
+<div nativeView >
+ <!--   <iframe id="nativeViewFrame"></iframe> -->
+</div>
+<div id="databar">
+
+
+</div>
+<script type="text/javascript" src="js/app/views/viewer.js"> </script>
+</body>
+</html>
