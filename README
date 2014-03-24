@@ -1,4 +1,0 @@
- SolrFlexView
-Node.js/backbone based flexible search tool/viewer for searching for documents & metadata accross multiple SOLR cores
-
-utilizes Some of solr's json feeds to read database schema's avoiding the need to include this info in the config. 
