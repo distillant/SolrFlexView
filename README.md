@@ -16,7 +16,7 @@ a modern web browser
 copy the code to your server using git:
 
 ````bash
-git fetch https://github.com/distillant/SolrFlexView.git;
+git clone https://github.com/distillant/SolrFlexView.git
 cd SolrFlexView/
 npm install
 ````
