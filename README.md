@@ -47,3 +47,52 @@ you can access the application with in the browser at:
 http://localhost:3000/index.html
 
 The front end code is located in the public folder. This system uses backbone.js for a front end mvc framework storing data recived from the server in collections and models. This system uses require.js to dynamically load modular html templates, and javascript code as needed on the fly.
+
+
+#Architecture
+Aritecture model for this project is focused on providing an extensable, reusable, open architecture with plugins for the implementation specific components.
+in particular the image and native file lookup mechanism is something that
+requires custom implemnetation code. so there will be a public
+image retrival interface but a non-standard backend lookup mechanism.
+
+#API:
+
+###CoreList:
+get solr core list:
+http://[host_url]/coreList
+
+response:
+````
+###retrieve native file
+
+
+    app.get('/coreList', user.cores );
+    app.get('/fields/:core', user.fields );
+    app.get('/record/:core/:uniqueField/:key', records.recordData );
+    app.post('/AdvancedSearch',records.AdvancedSearchSolr);
+    app.get('/Images/:core/:uniqueField/:key', CCTiffLookup.getTiffsInfo);
+    app.get('/Images/:DB/:DocID', testfeeds.DocumentImages); //not implementaed
+    app.get('/Image', image.getPNG);
+    app.get('/Image/:DB/:DOCID/:Page', testfeeds.SinglePageImage); //not implemented
+Image retrieval interface
+
+###Get list of images for document:
+http://[host_url]/image?core=[core_name]&docID=[Document_ID]
+ex.
+http://localhost:3000/images?core=EnglishBooks&key=12327685785
+Response:
+{images:[http://localhost:3000/getpng/EnglishBooks/12323123123.png
+]}
+
+###get image:
+[host_url]\getPNG?core=[core_name]&file="FilePath"
+or
+"[host_url]\getPNG\[Core]\[DocID]"
+
+ex.
+http://localhost:3000/images?core=EnglishBooks&key=12327685785
+Response:(PNG binary code)
+
+
+    app.get('/OCR/:core/:key', OCR.GetSQLOCR);
+    app.get('/Native/:DB/:DOCID' //not implemented
