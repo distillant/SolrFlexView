@@ -49,22 +49,22 @@ http://localhost:3000/index.html
 The front end code is located in the public folder. This system uses backbone.js for a front end mvc framework storing data recived from the server in collections and models. This system uses require.js to dynamically load modular html templates, and javascript code as needed on the fly.
 the front end folder structure is as follows:
 
-public
-│   ├── bootstrap (bootstrap only code)
-│   │   ├── css
-│   │   ├── img
-│   │   └── js
-│   ├── css *(stylesheets)*
-│   └── js  *(this where the magic happens)*
-│       ├── app
-│       │   ├── router.js *(most functionality starts here)*
-│       │   ├── models *(backbone Models)*
-│       │   └── views *(backbone views)*
-│       ├── require.js
-│       ├── app.js *(require config,  starts the single page app)*
-│       ├── lib *(jquery, backbone, custom d3 charting code, etc)*
-│       └── tpl *(html fragments and underscore html templates)*
-└── index.html *(the single page in single page app. loads require.js)*
+    public
+    │   ├── bootstrap (bootstrap only code)
+    │   │   ├── css
+    │   │   ├── img
+    │   │   └── js
+    │   ├── css *(stylesheets)*
+    │   └── js  *(this where the magic happens)*
+    │       ├── app
+    │       │   ├── router.js *(most functionality starts here)*
+    │       │   ├── models *(backbone Models)*
+    │       │   └── views *(backbone views)*
+    │       ├── require.js
+    │       ├── app.js *(require config,  starts the single page app)*
+    │       ├── lib *(jquery, backbone, custom d3 charting code, etc)*
+    │       └── tpl *(html fragments and underscore html templates)*
+    └── index.html *(the single page in single page app. loads require.js)*
 
 #Architecture
 Aritecture model for this project is focused on providing an extensable, reusable, open architecture with plugins for the implementation specific components.
