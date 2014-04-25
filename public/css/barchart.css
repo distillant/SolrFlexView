@@ -1,0 +1,30 @@
+.barchart
+{
+    float:left;
+    width:540px;
+    height:500px;
+    border:solid 1px;
+    margin:10px;
+}
+
+.bar
+{
+    fill:steelblue;
+}
+.bar:hover
+{
+    fill:brown;
+}
+.axis
+{
+    font:10px sans-serif;
+}
+.axis path, .axis line
+{
+    fill:none;
+    stroke:#000;
+    shape-rendering:crispEdges;
+}
+.x.axis path {
+    display:none;
+}

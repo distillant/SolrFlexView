@@ -16,11 +16,11 @@ define(function (require) {
     $body.click(function () {
         $('.dropdown').removeClass("open");
     });
-
+/*
     $("body").on("click", "#showMeBtn", function (event) {
         event.preventDefault();
         shellView.search();
-    });
+    });*/
 
 
 
@@ -32,7 +32,8 @@ define(function (require) {
             "employees/:id": "employeeDetails",
             "cores": "showCoreList",
             "AdvancedSearch/:coreName": "AdvancedSearchEntry",
-            "showVideo": "showVideo"
+            "showVideo": "showVideo",
+            "CoreCharts": "CoreCharts"
 
         },
         initialize: function (options){
@@ -47,6 +48,26 @@ define(function (require) {
             homeView.delegateEvents(); // delegate events when the view is recycled
             homeView.render();
             shellView.selectMenuItem('home-menu');
+        },
+        CoreCharts:function()
+        {
+
+            require(["app/views/CoreCharts", "app/models/cores"],function(ChartView, coreModels)
+            {
+                var coresCollection= new coreModels.CoresCollection;
+                coresCollection.fetch(
+                {
+                    success: function (model, response, options) {
+                        var view = new ChartView({collection: model, el: $content});
+                        view.render();
+                    },
+                    error: function (model, response, options) {
+                        var err =response.responseText;
+                        alert("error getting while getting cores Data from app server: "+ err);
+                    }
+                });
+            });
+
         },
         showCoreList : function () {
             require(["app/views/coreListView", "app/models/cores"],function(CoreListView, coreModels)
