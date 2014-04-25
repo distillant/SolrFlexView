@@ -54,17 +54,17 @@ the front end folder structure is as follows:
     │   │   ├── css
     │   │   ├── img
     │   │   └── js
-    │   ├── css *(stylesheets)*
-    │   └── js  *(this where the magic happens)*
+    │   ├── css (stylesheets)
+    │   └── js  (this where the magic happens)
     │       ├── app
-    │       │   ├── router.js *(most functionality starts here)*
-    │       │   ├── models *(backbone Models)*
-    │       │   └── views *(backbone views)*
+    │       │   ├── router.js   (most functionality starts here)
+    │       │   ├── models   (backbone Models)
+    │       │   └── views   (backbone views)
     │       ├── require.js
-    │       ├── app.js *(require config,  starts the single page app)*
-    │       ├── lib *(jquery, backbone, custom d3 charting code, etc)*
-    │       └── tpl *(html fragments and underscore html templates)*
-    └── index.html *(the single page in single page app. loads require.js)*
+    │       ├── app.js   (require config,  starts the single page app)
+    │       ├── lib   (jquery, backbone, custom d3 charting code, etc)
+    │       └── tpl   (html fragments and underscore html templates)
+    └── index.html   (the single page in single page app. loads require.js)
 
 #Architecture
 Aritecture model for this project is focused on providing an extensable, reusable, open architecture with plugins for the implementation specific components.
@@ -79,7 +79,7 @@ get solr core list:
 http://[host_url]/coreList
 
 response:
-````
+
 ###retrieve native file
 
 
