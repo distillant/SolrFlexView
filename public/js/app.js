@@ -8,9 +8,7 @@ require.config({
     },
 
     map: {
-        '*': {
-            'app/models/employee': 'app/models/memory/employee'
-        }
+       
     },
 
     shim: {

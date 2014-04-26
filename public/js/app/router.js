@@ -29,7 +29,7 @@ define(function (require) {
         routes: {
             "": "home",
             "contact": "contact",
-            "employees/:id": "employeeDetails",
+
             "cores": "showCoreList",
             "AdvancedSearch/:coreName": "AdvancedSearchEntry",
             "showVideo": "showVideo",
@@ -94,29 +94,7 @@ define(function (require) {
                 self.appView.showView(view);
                 //view.render();
             });
-        } /*,
-        contact: function () {
-            require(["app/views/Contact"], function (ContactView) {
-                var view = new ContactView({el: $content});
-                view.render();
-                shellView.selectMenuItem('contact-menu');
-            });
-        },
-
-        employeeDetails: function (id) {
-            require(["app/views/Employee", "app/models/employee"], function (EmployeeView, models) {
-                var employee = new models.Employee({id: id});
-                employee.fetch({
-                    success: function (data) {
-                        // Note that we could also 'recycle' the same instance of EmployeeFullView
-                        // instead of creating new instances
-                        var view = new EmployeeView({model: data, el: $content});
-                        view.render();
-                    }
-                });
-                shellView.selectMenuItem();
-            });
-        }*/
+        }
 
     });
 

@@ -5,7 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var cores = require('./routes/cores');
 var records = require('./routes/records');
 var testfeeds = require('./routes/testFeeds');
 var CCTiffLookup = require('./routes/CCTiffLookup');
@@ -52,26 +52,21 @@ if (arg1=="testing")
     app.post('/AdvancedSearch', testfeeds.advancedSearch);
     app.get('/fields/:core', testfeeds.fields );
     app.get('/record/:core/:uniqueField/:key', testfeeds.recordData );
-
 }
 else
 {
-    app.get('/coreList', user.cores );
-    app.get('/fields/:core', user.fields );
+    app.get('/coreList', cores.cores );
+    app.get('/fields/:core', cores.fields );
     app.get('/record/:core/:uniqueField/:key', records.recordData );
     app.post('/AdvancedSearch',records.AdvancedSearchSolr);
     app.get('/Images/:core/:uniqueField/:key', CCTiffLookup.getTiffsInfo);
     app.get('/Image', image.getPNG);
     app.get('/OCR/:core/:key', OCR.GetSQLOCR);
-
-
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/', routes.index);
+//app.get('/users', user.list);
 //test feeds
-
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

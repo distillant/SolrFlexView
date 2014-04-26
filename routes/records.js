@@ -1,7 +1,7 @@
 /**
  * Created by conroyp on 11/26/13.
  */
-var search=require("solr/search.js").solrSearch;
+var search=require("./solr/search").solrSearch;
 
 exports.recordData= function(req, res){
     var key,uniqueField,core;
@@ -40,7 +40,7 @@ exports.recordData= function(req, res){
     }
     var start=0;
     var end=1;
-    search.SolrRecord(core,searchCriteria,start,end responseHandler);
+    search.SolrRecord(core,searchCriteria,start,end,responseHandler);
 };
 
 
@@ -91,7 +91,7 @@ exports.AdvancedSearchSolr = function(req, res){
             }
             else{
                 res.setHeader("Content-Type", "text/html");
-                res.write(JSON.stringify(obj)); //send object as is to include start & end for paging
+                res.write(JSON.stringify(obj)); //send entire object to include start & end for paging
                 res.end();
                 console.log(obj);
             }
