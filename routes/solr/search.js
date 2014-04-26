@@ -1,7 +1,7 @@
 /**
  * Created by patrick conroy on 4/26/14.
  */
-exports.SolrRecord=function(core,uniqueField,key,callback)
+exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback)
 {
     try{
         var solrIP=global.AppConfig.solrIP;
@@ -11,15 +11,14 @@ exports.SolrRecord=function(core,uniqueField,key,callback)
         var solr = require('solr-client');
         var client = solr.createClient(solrIP,solrPort,core,solrDirectory);
 
-
-        var queryOptions ={};
-        //set query to retrive record using its uniqueKey for that particular core.
-        queryOptions[uniqueField]=key;
         var query = client.createQuery()
-            .q(queryOptions)
-            .start(0)
-            .rows(1);
+            .q(searchCriteria)
+            .start(start)
+            .rows(end);
 
+        //filter return fields if displayFields specified.
+        if (displayFields)
+            query.fl(displayFields);
         client.search(query, callback(err,obj));
     }
     catch(err)
