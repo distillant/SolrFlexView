@@ -2,10 +2,10 @@
  * Created by conroyp on 11/26/13.
  */
 
-/*
+
 var events = require('events');
 dataResponsesListener = new events.EventEmitter();
-
+ /*
 exports.documentData= function(req,res)
 {
     var core=req.params.core;
@@ -62,43 +62,44 @@ var getMetaData = function(core,uniqueField,DocID, documentFullData)
 };
 
  */
+var search=require("solr/search.js");
+
 exports.recordData= function(req, res){
-    try{
-        var solrIP=global.AppConfig.solrIP;
-        var solrPort=global.AppConfig.solrPort;
-        var solrDirectory=global.AppConfig.solrDirectory;
-        var core=req.params.core;
-        var solr = require('solr-client');
-        var client = solr.createClient(solrIP,solrPort,core,solrDirectory);
-        var uniqueField=req.params.uniqueField;
-        var key=req.params.key.toString();
-        var queryOptions ={};
-        //set query to retrive record using its uniqueKey for that particular core.
-        queryOptions[uniqueField]=key;
-        var query = client.createQuery()
-            .q(queryOptions)
-            .start(0)
-            .rows(1);
-
-        client.search(query,function(err,obj){
-            if(err){
-                res.setHeader("Content-Type", "text/html");
-                res.write(JSON.stringify(err));
-                res.end();
-                console.log(err);
-            }else{
-                res.setHeader("Content-Type", "text/html");
-                res.write(JSON.stringify(obj.response.docs[0]));
-                res.end();
-                console.log(obj);
-
-            }
-        });
-    }
-    catch(err)
+    var key,uniqueField,core;
+    for(param in ["key","uniqueField","core"])
     {
-        console.log(err);
+        if (!req.params[param])
+        {
+            console.log("query missing parameter: "+param);
+            res.setHeader("Content-Type", "text/html");
+            res.write(JSON.stringify("Error: query missing Parameter:"+param));
+            res.end();
+            return;
+        }
     }
+
+    var key=req.params.key.toString();
+    var uniqueField=req.params.uniqueField;
+    var core=req.params.core;
+
+    responseHandler=function(err,obj)
+    {
+        if(err){
+            res.setHeader("Content-Type", "text/html");
+            res.write(JSON.stringify(err));
+            res.end();
+            console.log(err);
+        }
+        else{
+            res.setHeader("Content-Type", "text/html");
+            res.write(JSON.stringify(obj.response.docs[0]));
+            res.end();
+            console.log(obj);
+        }
+    }
+    search.SolrRecord(core,uniqueField,key, responseHandler );
+
+
 };
 
 exports.AdvancedSearchSolr = function(req, res){
