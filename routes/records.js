@@ -1,68 +1,7 @@
 /**
  * Created by conroyp on 11/26/13.
  */
-
-
-var events = require('events');
-dataResponsesListener = new events.EventEmitter();
- /*
-exports.documentData= function(req,res)
-{
-    var core=req.params.core;
-    var uniqueField=req.params.uniqueField;
-    var key=req.params.key.toString();
-
-    var documentFullData={
-        metaData:{},
-        tiffimages:[],
-        nativeFile:null,
-        OCRtext:null
-    };
-    employeeAddedListener.addListener("addedEmployee",function(){ //send if done
-     });
-
-    getMetaData();
-    //get imagedata
-    //get
-};
-
-var getMetaData = function(core,uniqueField,DocID, documentFullData)
-{
-    try{
-        var solrIP=global.AppConfig.solrIP;
-        var solrPort=global.AppConfig.solrPort;
-        var solrDirectory=global.AppConfig.solrDirectory;
-        var solr = require('solr-client');
-        var client = solr.createClient(solrIP,solrPort,core,solrDirectory);
-        var queryOptions ={};
-        //set query to retrive record using its uniqueKey for that particular core.
-        queryOptions[uniqueField]=key;
-        var query = client.createQuery()
-            .q(queryOptions)
-            .start(0)
-            .rows(1);
-
-        client.search(query,function(err,obj){
-            if(err){
-                console.log("received error while retrieving record from SOLR server");
-                console.log(err);
-                documentFullData.metaData=err;
-                dataResponsesListener.emit("metaDataAdded");
-            }else{
-                console.log("retrieved record");
-                documentFullData.metaData=obj.response.docs[0];
-            }
-        });
-    }
-    catch(err)
-    {
-        documentFullData.metaData=err;
-        console.log(err);
-    }
-};
-
- */
-var search=require("solr/search.js");
+var search=require("solr/search.js").solrSearch;
 
 exports.recordData= function(req, res){
     var key,uniqueField,core;
@@ -81,6 +20,8 @@ exports.recordData= function(req, res){
     var key=req.params.key.toString();
     var uniqueField=req.params.uniqueField;
     var core=req.params.core;
+    searchCriteria={};
+    searchCriteria[uniqueField]=key;
 
     responseHandler=function(err,obj)
     {
@@ -97,35 +38,41 @@ exports.recordData= function(req, res){
             console.log(obj);
         }
     }
-    search.SolrRecord(core,uniqueField,key, responseHandler );
-
-
+    var start=0;
+    var end=1;
+    search.SolrRecord(core,searchCriteria,start,end responseHandler);
 };
 
+
+/*
+ Advanced search requires a posted object structured as follows:
+ {core:"Core_NAME",
+ start:0,
+ end:50,
+ searchArray:[{fieldName: "Author", searchTerms: "conroy"}]
+ displayFields:["docID","Author","URL"]
+ }
+ */
 exports.AdvancedSearchSolr = function(req, res){
 
     try{
-
-        var solr = require('solr-client');
-        //var client = solr.createClient("127.0.0.1",'8983','DTIStuff','/solr');
-
         var qParams=req.body;
-
         if (typeof(qParams.core) =="undefined")
         {
             res.setHeader("Content-Type", "text/html");
             res.write("error: database core name was not included in request");
             res.end();
             return;
-
         }
         var core=qParams.core;
-        var AdvancedQuery={};
+        var advancedQuery={};
+        var start=qParams.start || 0;
+        var end =qParams.end || 50;
         for (x =0;  x < qParams.searchArray.length; x++)
         {
             var fieldName=qParams.searchArray[x].fieldName;
             var searchTerms=qParams.searchArray[x].searchTerms;
-            AdvancedQuery[fieldName]="(" +searchTerms + ")";
+            advancedQuery[fieldName]="(" +searchTerms + ")";
         }
         var displayFields="";
         for(x=0;x<qParams.displayFields.length;x++)
@@ -134,29 +81,23 @@ exports.AdvancedSearchSolr = function(req, res){
             displayFields += x>0?  ",":"";
             displayFields+=qParams.displayFields[x];
         }
-        var client = solr.createClient(global.AppConfig.solrIP,global.AppConfig.solrPort,core,global.AppConfig.solrDirectory);
-
-        var query = client.createQuery()
-            .q(AdvancedQuery)
-            //.rangeFilter({field:'PARENTDATE',  start:tempStartDate,end:tempEndDate})
-            //.q({AUTHOR : addressee})
-            .fl(displayFields)
-            .start(0)
-            .rows(50);
-        client.search(query,function(err,obj){
+        var responseHandler=function(err,obj)
+        {
             if(err){
-                res.setHeader("Content-Type", "text/JSON");
+                res.setHeader("Content-Type", "text/html");
                 res.write(JSON.stringify(err));
                 res.end();
                 console.log(err);
-            }else{
-                res.setHeader("Content-Type", "text/JSON");
-                res.write(JSON.stringify(obj));
+            }
+            else{
+                res.setHeader("Content-Type", "text/html");
+                res.write(JSON.stringify(obj)); //send object as is to include start & end for paging
                 res.end();
                 console.log(obj);
-
             }
-        });
+        }
+
+        search.SolrRecord(core,searchCriteria,displayFields,start,end, responseHandler);
     }
     catch(err)
     {
