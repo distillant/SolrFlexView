@@ -4,6 +4,7 @@
 var search=require("./solr/search").solrSearch;
 
 exports.recordData= function(req, res){
+    var search=require("./solr/search").solrSearch;
     var key,uniqueField,core;
     for(param in ["key","uniqueField","core"])
     {
@@ -54,8 +55,8 @@ exports.recordData= function(req, res){
  }
  */
 exports.AdvancedSearchSolr = function(req, res){
+    var search=require("./solr/search").SolrSearch;
 
-    try{
         var qParams=req.body;
         if (typeof(qParams.core) =="undefined")
         {
@@ -97,10 +98,6 @@ exports.AdvancedSearchSolr = function(req, res){
             }
         }
 
-        search.SolrRecord(core,searchCriteria,displayFields,start,end, responseHandler);
-    }
-    catch(err)
-    {
-        console.log(err);
-    }
+        search(core,advancedQuery,displayFields,start,end, responseHandler );
+
 };

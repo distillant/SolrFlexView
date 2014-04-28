@@ -3,7 +3,7 @@
  */
 exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback)
 {
-    try{
+    
         var solrIP=global.AppConfig.solrIP;
         var solrPort=global.AppConfig.solrPort;
         var solrDirectory=global.AppConfig.solrDirectory;
@@ -19,10 +19,5 @@ exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback
         //filter return fields if displayFields specified.
         if (displayFields)
             query.fl(displayFields);
-        client.search(query, callback(err,obj));
-    }
-    catch(err)
-    {
-        console.log(err);
-    }
+        client.search(query, function(err,obj){callback(err,obj);});
 }
