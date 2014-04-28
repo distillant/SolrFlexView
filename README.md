@@ -8,7 +8,7 @@ This implementation also includes features related to our particular use case.
 	-Tt provides the ablity to extract documents matching particular criteria in a standard format.
 
 ##Requirements: 
-Node.js version 1 or higher;
+Node.js version .10 or higher;
 Solr server version 3.5 and higher loaded with a solr core; with access open to the server where you install this application.
 a modern web browser
 
