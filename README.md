@@ -32,7 +32,15 @@ ie.
 ````bash
 cd SolrFlexView/node_modules/express/ 
 npm install
+cd ../..
+node app.js testing
 ````
+
+```` now go back to the SolrFlexView folder and try out using the mocks.
+cd ../..
+node app.js testing
+````
+
 
 sample Configuration is under appConfigDev.js rename it to appConfig.js and alter it with your environment's settings. this file will contain your passwords, solr ip and url, and sql credentials if needed.
 currently it looks something like this.
