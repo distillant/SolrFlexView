@@ -10,7 +10,10 @@ This implementation also includes features related to our particular use case.
 ##Requirements: 
 Node.js version .10 or higher;
 Solr server version 3.5 and higher loaded with a solr core; with access open to the server where you install this application.
-a modern web browser
+a modern web browser.
+To run without SOLR utilizing mocks type use "testing" parameter when launching app:
+ie: SolrFlexView/$: node app.js testing
+
 
 ##Getting started:
 copy the code to your server using git:
