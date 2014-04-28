@@ -32,11 +32,11 @@ ie.
 ````bash
 cd SolrFlexView/node_modules/express/ 
 npm install
-cd ../..
-node app.js testing
 ````
 
-```` now go back to the SolrFlexView folder and try out using the mocks.
+now go back to the SolrFlexView folder and try out using the mocks.
+
+````bash
 cd ../..
 node app.js testing
 ````
