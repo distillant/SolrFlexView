@@ -12,7 +12,7 @@ lib-cov
 pids
 logs
 results
-
+tests/samplefeeds/*
 npm-debug.log
 node_modules
 AppConfig.js

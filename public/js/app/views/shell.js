@@ -5,8 +5,6 @@ define(function (require) {
     var $                   = require('jquery'),
         _                   = require('underscore'),
         Backbone            = require('backbone'),
-       // EmployeeListView    = require('app/views/EmployeeList'),
-       // models              = require('app/models/employee'),
         tpl                 = require('text!tpl/Shell.html'),
 
         template = _.template(tpl),
@@ -20,8 +18,6 @@ define(function (require) {
 
         render: function () {
             this.$el.html(template());
-            //var listView = new EmployeeListView({collection: this.employeeList, el: $(".employee-list", this.el)});
-            //listView.render();
             $menuItems = $('.navbar .nav li', this.el);
             return this;
         },

@@ -1,0 +1,16 @@
+backend
+-unit test core requests
+
+
+-unit test fields request
+-unit test the solr search function utilizing a mock basic search and mock advanced search
+-unit test the advanced Search function with fake request, and real request,
+-unit test the record search function
+    check that it returns the expected number of fields
+-unit test the image request
+-unit test
+
+
+
+frontEnd tests
+check
