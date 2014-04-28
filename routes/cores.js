@@ -12,9 +12,9 @@ exports.cores=function(req,res)
     var http = require('http');
 
         var options = {
-        host: '10.106.4.112',
-        port:'8080',
-        path: '/solr/admin/cores?wt=json'
+        host:  AppConfig.solrIP,
+        port: AppConfig.solrPort,
+        path: AppConfig.solrDirectory +'/admin/cores?wt=json'
     };
 
     var callback = function(response) {
@@ -61,9 +61,9 @@ exports.fields=function(req,res)
     var coreName=req.params.core;
     //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
     var options = {
-        host: '10.106.4.112',
-        port:'8080',
-        path: '/solr/'+ coreName+'/admin/luke?show=schema&wt=json'
+        host:  AppConfig.solrIP,
+        port: AppConfig.solrPort,
+        path: AppConfig.solrDirectory +'/'+ coreName+'/admin/luke?show=schema&wt=json'
 
     };
 

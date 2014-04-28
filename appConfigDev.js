@@ -4,7 +4,7 @@
 module.exports={
     solrIP:"localhost",
     solrDirectory:'/solr',
-    solrPort:'8080',
+    solrPort:'8983',
 
     //non-generic section
     SQLUserName: 'admin',

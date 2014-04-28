@@ -16,7 +16,7 @@ var http = require('http');
 var path = require('path');
 
 var app = express();
-global.AppConfig = require('./AppConfig.js');
+global.AppConfig = require('./AppConfigDev.js');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
