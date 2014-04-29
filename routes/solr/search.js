@@ -3,7 +3,7 @@
  */
 exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback)
 {
-    
+
         var solrIP=global.AppConfig.solrIP;
         var solrPort=global.AppConfig.solrPort;
         var solrDirectory=global.AppConfig.solrDirectory;
