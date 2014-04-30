@@ -50,9 +50,9 @@ return Backbone.View.extend({
             yField: "sizeInMB",
             xField: "name",
             Yticks: 10
-        });
+        };
         BarChart(chart1);
         BarChart(chart2);
-    }
+    };
 });
 });
