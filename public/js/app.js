@@ -41,6 +41,6 @@ require(['jquery', 'backbone', 'app/router','app/views/AppView'], function ($, B
     };
     //launch the rest of the app
     var appView= new AppView();
-    var router = new Router({appView:appView});
+    router = new Router({appView:appView});
     Backbone.history.start();
 });

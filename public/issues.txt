@@ -1,0 +1,6 @@
+problems with this project
+the front end code was migrated from a non-backbome, non-require supported prototype.
+I'm noticing there plenty of spots where the mv* pattern wasn't fully implented
+which I'm attempting to correct.
+templating capabilty were not fully utilized.
+-doesn't follow rest patterns properly (cores should for endpoint)

@@ -9,8 +9,14 @@
         </div>
 
     <label>Display Fields</label><br>
-    <select  id="displayFields" multiple="true" size="6" name="displayFields"></select>
-    <br>
+    <select  id="displayFields" multiple="true" size="6" name="displayFields">
+        <% _.each(fields,function(df) { %>
+        <option value="<%= df.field %>"><%= df.field %></option>
+        <% }); %>
+    </select></br>
+        <input type="button" id="btnSelectAll" value="Select All" class="btn btn-primary btn-sm active"  >
+        </br>
+        </br>
     <input type="button" id="btnAdvanceSearch" value="Search" class="btn btn-primary btn-sm active"  >
     <input type="button" id="btnCancel" class="btn btn-primary btn-sm active" value="Cancel">
     </form>

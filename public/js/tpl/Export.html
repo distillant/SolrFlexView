@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="../lib/jquery.js" type="text/javascript"></script>
     <title></title>
 </head>
 <body>
+
+<form name="exportCriteria" action="export">
 <H1>Export</H1>
 <div id="selectedItems">
 <span>
-
 <div> Items Selected:</span><span id="itemsSelected"></span></div>
 <div> <input type="radio" name="All" >Export All Query Results </div>
 <div> <input type="radio" value="Selected" >Export Selected Items </div>
@@ -23,5 +25,9 @@
 </div>
 <input type="button" value="Begin" >
 <input type="button" value="Cancel">
+</form>
 </body>
+<script type="text/javscript">
+     bob=$("form").serialize();
+</script>
 </html>

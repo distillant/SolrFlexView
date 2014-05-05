@@ -1,7 +1,4 @@
 /**
- * Created by mallard on 11/15/13.
- */
-/**
  * Created by conroyp on 11/13/13.
  */
 define(function (require) {
@@ -30,17 +27,6 @@ define(function (require) {
                 //this.model.attributes[fieldToChange]=newValue;
 
             },
-            addFields :function()
-            {
-                for (var field in this.options.fields)
-                {
-                    var outputLine = "<option value='"+ field + "'>"+ field+"</option>";
-                    this.$el.find("#fieldName").append(outputLine);
-                }
-
-                var outputLine = "<option value='"+ field +"'>"+ field+"</option>";
-                $(this.el).find("#fieldName").append(outputLine );
-            },
             fieldChange: function()
             {
                 var selectedValue=this.model.get("fieldName");
@@ -55,8 +41,7 @@ define(function (require) {
             },
             initialize:function(){
 
-                this.$el.html(tpl);
-                this.addFields();
+                this.$el.html(template({fields:this.options.fields.toJSON()}));
                 this.model.on('change:fieldName',this.fieldChange, this)
 
             },

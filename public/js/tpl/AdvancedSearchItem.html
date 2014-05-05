@@ -1,4 +1,7 @@
-<select  id="fieldName" name="field"><option value="">Select field...</option></select>
+<select  id="fieldName" name="field">
+    <% _.each(fields,function(df) { %>
+    <option value="<%= df.field %>"><%= df.field %></option>
+    <% }); %></select>
 <select  id="connector" name="connector">
     <option value="contains">contains</option>
 </select>

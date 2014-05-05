@@ -37,8 +37,10 @@ define(function (require) {
 
         },
         initialize: function (options){
-            this.appView = options.appView;
+            this.appView = options.appView
+
         },
+        solrSearch:{}, //this will store the solrSearch object
         showVideo: function(){
             var iframeHTML= "<iframe width='420' height='315' src='//www.youtube.com/embed/EkS6R0YtobQ' frameborder='0' ></iframe>";
             $('#introVideo').html(iframeHTML );
@@ -94,8 +96,60 @@ define(function (require) {
                 self.appView.showView(view);
                 //view.render();
             });
-        }
+        },
+        queryResultsReturn: function(data)
+        {
+            require(["app/views/QueryResults", "app/models/queryResults"],function(QueryResultsView, QueryResultsModels)
+            {
+                var QueryResultsCollection=QueryResultsModels.QueryResults,
+                    QueryResult=QueryResultsModels.QueryResult;
 
+                if (typeof(data)=="undefined")
+                    return;
+                data=JSON.parse(data);
+
+                var createDefaults =function(fieldsArray)
+                {
+                    var defaults={};
+                    for (var x in fieldsArray )
+                    {
+                        //pull value from fields array, convert it to object name, set to null
+                        defaults[fieldsArray[x]]=null;
+                    }
+                    return defaults;
+                };
+                if (data.name) //catch errors
+                {
+                    alert(data.name +" : "+data.message || "" );
+                    return;
+                }
+                //initialize collection
+
+
+                //var options= { defaults: this.createDefaults(this.solrSearch.displayFields)};
+
+                //create model, set it for the collection.
+                // var customQueryResultModel=new QueryResult({},options);
+                // var customQueryResultModel=new QueryResult({},options);
+                var displayfields =createDefaults(router.solrSearch.displayFields);
+                var QueryResultCustom= Backbone.Model.extend({defaults:displayfields});
+                var queryResults=new QueryResultsCollection();
+                queryResults.model=QueryResultCustom;
+                queryResults.add(data.response.docs);
+
+                //set special metadata attributes for Query Results collection
+                queryResults.meta('totalHits',data.response.numFound);
+                queryResults.meta('itemStartNum',data.response.start);
+                queryResults.meta('rowsRequested',data.response.docs.length);
+                queryResults.meta('core',router.solrSearch.coreName);
+               // queryResults.meta('uniqueField',this.uniqueField);
+                queryResults.meta('uniqueField',"id"); //temporary
+                var queryResultsView =new QueryResultsView({collection:queryResults});
+                $('#content').html( queryResultsView.render().$el);
+
+
+            });
+        }
     });
 
 });

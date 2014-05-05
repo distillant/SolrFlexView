@@ -77,7 +77,28 @@ exports.fields=function(req,res)
 
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
-            res.send(str);
+
+            var SolrSchema=JSON.parse(str);
+            if (SolrSchema.schema)
+            {
+                var fields=[];
+                for (field in SolrSchema.schema.fields)
+                { var fieldObj=SolrSchema.schema.fields[field];
+                    fieldObj.field=field;
+                    fields.push(fieldObj);
+                }
+                console.log(JSON.stringify(fields));
+                res.setHeader("Content-Type", "text/html");
+                res.send(JSON.stringify(fields));
+                res.end();
+
+            }
+            else
+            {
+                errorMsg="error: error parsing Solr fields from response";
+                res.send(errorMsg);
+                console.log(errorMsg);
+            }
         });
     };
     try

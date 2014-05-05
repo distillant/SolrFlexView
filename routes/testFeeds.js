@@ -1,10 +1,10 @@
 /**
- * Created by mallard on 12/2/13.
+ * Created by conroyp on 12/2/13.
  */
 var fs = require('fs');
 exports.coreList = function(req,res)
 {
-    var CCPaperResponse =fs.readFile('./tests/mocks/cores.json', function (err,data) {
+    var CCPaperResponse =fs.readFile('./test/mocks/cores.json', function (err,data) {
         if (err) {
             res.writeHead(404);
             res.end(JSON.stringify(err));
@@ -25,7 +25,7 @@ exports.coreList = function(req,res)
 
 exports.advancedSearch=function(req,res)
 {
-    var CCPaperResponse =fs.readFile('./tests/mocks/CCPaperResponse.json', function (err,data) {
+    var CCPaperResponse =fs.readFile('./test/mocks/CCPaperResponse.json', function (err,data) {
         if (err) {
             res.writeHead(404);
             res.end(JSON.stringify(err));
@@ -38,7 +38,7 @@ exports.advancedSearch=function(req,res)
 
 exports.OCRText=function(req,res)
 {
-    var CCPaperResponse =fs.readFile('./tests/mocks/ocrText.json', function (err,data) {
+    var CCPaperResponse =fs.readFile('./test/mocks/ocrText.json', function (err,data) {
         if (err) {
             res.writeHead(404);
             res.end(JSON.stringify(err));
@@ -50,8 +50,8 @@ exports.OCRText=function(req,res)
 };
 exports.NativeFile=function(req,res){ };
 exports.SinglePageImage=function(req,res){
-    var pictures =['./tests/mocks/Photo_on_12-4-13_at_6.26 PM.jpg',
-    './tests/mocks/picture2.jpg'];
+    var pictures =['./test/mocks/Photo_on_12-4-13_at_6.26 PM.jpg',
+    './test/mocks/picture2.jpg'];
     var filepath= pictures[req.params.Page-1]
     var CCPaperResponse =fs.readFile(filepath, function (err,data) {
     if (err) {
@@ -67,7 +67,7 @@ exports.SinglePageImage=function(req,res){
 };
 exports.DocumentImages=function(req,res){ };
 exports.fields=function(req,res){
-    var CCPaperResponse =fs.readFile('./tests/mocks/CCEDATA_schema.json', function (err,data) {
+    var CCPaperResponse =fs.readFile('./test/mocks/CCEDATA_schema.json', function (err,data) {
     if (err) {
         res.writeHead(404);
         res.end(JSON.stringify(err));
@@ -80,7 +80,7 @@ exports.fields=function(req,res){
 
 exports.recordData=function(req,res)
 {
-    CCPaperResponse =fs.readFile('./tests/mocks/RecordData.json', function (err,data) {
+    CCPaperResponse =fs.readFile('./test/mocks/RecordData.json', function (err,data) {
         if (err) {
             res.writeHead(404);
             res.end(JSON.stringify(err));
