@@ -6,8 +6,8 @@
 
 var myConfigVars=
 {
-    imageMagickConvertAppPath:"C:\\temp\\ImageMagick\\convert.exe",
-    imageMagickIdentityAppPath:   "C:\\temp\\ImageMagick\\identify.exe"
+    imageMagickConvertAppPath:"convert.exe",
+    imageMagickIdentityAppPath:   "identify.exe"
 
 };
 var fs = require('fs'),
