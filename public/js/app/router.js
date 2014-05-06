@@ -141,9 +141,9 @@ define(function (require) {
                 queryResults.meta('totalHits',data.response.numFound);
                 queryResults.meta('itemStartNum',data.response.start);
                 queryResults.meta('rowsRequested',data.response.docs.length);
-                queryResults.meta('core',router.solrSearch.coreName);
+                queryResults.meta('core',router.solrSearch.core);
                // queryResults.meta('uniqueField',this.uniqueField);
-                queryResults.meta('uniqueField',"id"); //temporary
+                queryResults.meta('uniqueField',router.solrSearch.uniqueField); //temporary
                 var queryResultsView =new QueryResultsView({collection:queryResults});
                 $('#content').html( queryResultsView.render().$el);
 

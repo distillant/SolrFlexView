@@ -4,7 +4,7 @@
 define(function (require) {
     "use strict";
     var $           = require('jquery'),
-        Backbone    = require('backbone'),
+    Backbone    = require('backbone'),
         Field = Backbone.Model.extend({
             //url:"field",
 
@@ -17,14 +17,13 @@ define(function (require) {
             urlRoot: "/fields",
             model:Field,
             core:"collection1",
-            url:"/fields/collection1",
-/*
             url: function(){
 
                 return this.urlRoot + "/"+ this.core;
             },
-*/            initialize: function(){
-
+            initialize: function(options){
+                if (options.core)
+                    this.core=options.core;
             },
             meta: function(prop, value) {
                 if (value === undefined) {

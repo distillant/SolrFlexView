@@ -4,18 +4,15 @@
 //var search=require("./solr/search").solrSearch;
 
 exports.recordData= function(req, res){
-    var search=require("./solr/search").solrSearch;
+    var search=require("./solr/search").SolrSearch;
     var key,uniqueField,core;
-    for(param in ["key","uniqueField","core"])
+    if(!(req.params["key"] && req.params["uniqueField"] && req.params["core"]))
     {
-        if (!req.params[param])
-        {
-            console.log("query missing parameter: "+param);
-            res.setHeader("Content-Type", "text/html");
-            res.write(JSON.stringify("Error: query missing Parameter:"+param));
-            res.end();
-            return;
-        }
+        console.log("error: record request missing parameter");
+        res.setHeader("Content-Type", "text/html");
+        res.write(JSON.stringify("Error: record request  missing Parameter"));
+        res.end();
+        return;
     }
 
     var key=req.params.key.toString();
@@ -24,7 +21,7 @@ exports.recordData= function(req, res){
     searchCriteria={};
     searchCriteria[uniqueField]=key;
 
-    responseHandler=function(err,obj)
+    function responseHandler(err,obj)
     {
         if(err){
             res.setHeader("Content-Type", "text/html");
@@ -41,7 +38,8 @@ exports.recordData= function(req, res){
     }
     var start=0;
     var end=1;
-    search.SolrRecord(core,searchCriteria,start,end,responseHandler);
+    search(core,searchCriteria,null,start,end,responseHandler);
+
 };
 
 

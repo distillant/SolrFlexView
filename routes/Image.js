@@ -4,17 +4,11 @@
 
 
 
-var myConfigVars=
-{
-    imageMagickConvertAppPath:"convert.exe",
-    imageMagickIdentityAppPath:   "identify.exe"
 
-};
 var fs = require('fs'),
     im = require('imagemagick');
 
-im.identify.path=myConfigVars.imageMagickIdentityAppPath;
-im.convert.path= myConfigVars.imageMagickConvertAppPath;
+
 /*
 exports.image(req,res)
 {
@@ -24,6 +18,9 @@ exports.image(req,res)
 
 };*/
 exports.getPNG =function (req, res) {
+    im.identify.path=global.AppConfig.imageMagick.identityAppPath;
+    im.convert.path= global.AppConfig.imageMagick.convertAppPath;
+
     var ratio=100;
     var inputpath=req.query.file;
 

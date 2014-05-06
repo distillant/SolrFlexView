@@ -34,10 +34,12 @@ exports.cores=function(req,res)
                coresArray.push( lukeCoresData.status[core]);
            }
             res.send(JSON.stringify(coresArray));
+
         });
         response.on('error', function(e) {
             console.log('problem with request: ' + e.message);
             res.send("{error: \"error while attempting to retrive corelist from SOLR: "+e.message+ "\"}");
+
         });
     };
     try
@@ -77,8 +79,19 @@ exports.fields=function(req,res)
 
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
-
-            var SolrSchema=JSON.parse(str);
+        var SolrSchema;
+        try{
+                SolrSchema=JSON.parse(str);
+        }
+        catch(err)
+        {
+            console.log("error parsing fields response:"+err);
+            console.log("solr Response: "+ str);
+            res.setHeader("Content-Type", "text/html");
+            res.send("error parsing fields response from solr, contact administrator");
+            res.end();
+            return;
+        }
             if (SolrSchema.schema)
             {
                 var fields=[];
@@ -89,7 +102,7 @@ exports.fields=function(req,res)
                 }
                 console.log(JSON.stringify(fields));
                 res.setHeader("Content-Type", "text/html");
-                res.send(JSON.stringify(fields));
+                res.write(JSON.stringify(fields));
                 res.end();
 
             }

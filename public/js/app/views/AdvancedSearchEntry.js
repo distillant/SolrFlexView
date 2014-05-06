@@ -40,13 +40,20 @@ define(function (require) {
         getAvailableFields: function()
         {
             var self=this;
-            var fields=new Fields.Fields();
-            fields.core=this.options.coreName;
+            var fields=new Fields.Fields({core:this.options.coreName});
+
             fields.fetch({
                 success:function(data){
                     self.fields= data;
                     self.$el.html(template({fields:data.toJSON()}));
-                    //self.uniqueField=data.schema.uniqueKeyField;
+                    _(data.models).each(function(model){
+                    //iterate through collection to identify the key field and store name.
+                          if (model.get("uniqueKey")==true)
+                          {
+                              self.uniqueField=model.get("field");
+                          }
+                    });
+
 
                     if (typeof(router.solrSearch.core)!='undefined')
                     {
@@ -89,13 +96,14 @@ define(function (require) {
 
             var solrSearch={};
             solrSearch.core= this.options.coreName;
+            solrSearch.uniqueField= this.uniqueField;
             solrSearch.searchArray=this.collection.toJSON();
             solrSearch.displayFields = $("#AdvancedSearch #displayFields").val();
 
             var self=this;
             router.solrSearch =solrSearch;
             $.post("AdvancedSearch", solrSearch, function(data, textStatus, jqXHR){
-                router.queryResultsReturn(data);
+                router.queryResultsReturn(data );
             } );
 
         }
