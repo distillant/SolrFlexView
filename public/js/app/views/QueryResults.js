@@ -13,18 +13,7 @@ define(function (require) {
         template = _.template(tpl);
     return  Backbone.View.extend(
         {
-            createTableHead: function()
-            {
-                var displayFields= this.collection.model.prototype.defaults
-                var currentLine= "<thead><tr>";
-                currentLine +="<th>select</th><th>View</th>"
-                for (var fieldName in displayFields)
-                {
-                    currentLine +="<th>"+fieldName+"</th>";
-                }
-                currentLine +="</tr></thead>"
-                return currentLine;
-            },
+
             render: function () {
                 this.$el.html(template({displayFields: this.collection.model.prototype.defaults, data: this.collection.toJSON(), meta:this.collection._meta}));
                 this.$el.find('#serverMessages').html("");
