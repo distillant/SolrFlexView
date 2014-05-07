@@ -26,11 +26,11 @@ define(function (require) {
                 return currentLine;
             },
             render: function () {
-                this.$el.html(template({}));
+                this.$el.html(template({displayFields: this.collection.model.prototype.defaults, data: this.collection.toJSON(), meta:this.collection._meta}));
                 this.$el.find('#serverMessages').html("");
                 this.$el.find('#serverMessages').append("Hits: "+this.collection.meta('totalHits') + " - Results "+
                     this.collection.meta('itemStartNum')  + " to "+ this.collection.meta('rowsRequested'));
-                this.$el.find("table").append(this.createTableHead());
+                //this.$el.find("table").append(this.createTableHead());
                 this.collection.each(function(resultItem) {
                     var resultItemView=new ResultItemView({ model: resultItem });
                     var $ResultItem=resultItemView.render().$el;

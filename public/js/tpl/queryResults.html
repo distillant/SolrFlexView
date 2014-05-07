@@ -1,7 +1,15 @@
 <span id="serverMessages" ></span>
 <span class="paging" ><a href="#" id="previousSet">previous</a> <a href="#" id="nextSet">next</a></span>
 <div id="queryResultsView">
-    <table id="resultsTable"></table>
+    <table id="resultsTable">
+       <thead><tr>
+       <th>select</th><th>View</th>
+       <%for (var fieldName in displayFields)
+        {
+         %><th><%=fieldName%></th><%
+        }%>
+        </tr></thead>
+    </table>
 
 </div>
 <a href="#Export">Export</a>
