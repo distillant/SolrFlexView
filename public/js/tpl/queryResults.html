@@ -1,5 +1,12 @@
-<span id="serverMessages" ></span>
-<span class="paging" ><a href="#" id="previousSet">previous</a> <a href="#" id="nextSet">next</a></span>
+<div><span id="serverMessages" >
+<%console.log(meta); %>
+    Hits: <%=meta.totalHits%> Results
+<%=meta.itemStartNum%> to <%=meta.rowsRequested%>
+
+
+</span>
+<span class="paging" ><a href="#" id="previousSet">previous</a> <a href="#" id="nextSet">next</a>  <a href="#Export">Export</a></span>
+</div>
 <div id="queryResultsView">
     <table id="resultsTable">
        <thead><tr>
@@ -9,12 +16,21 @@
          %><th><%=fieldName%></th><%
         }%>
         </tr></thead>
-
-
+        <tbody>
+        <!--- since not all documents have all properties need to repeatedly
+        access them by name instead of by index and if they are undefined add empy string-->
+        <%  _.each(data, function(row){%>
+        <tr><td><input class='selectRecord' type='checkbox'></td>
+                <td><a class='viewRecord' href='#document/<%=meta.core%>/<%=meta.uniqueField%>/<%=row[meta.uniqueField]%>'>view</td>
+            <% for(var fieldName in displayFields){%>
+                <td> <%= (row[fieldName] || "").toString().substr(0,100) %></td>
+            <%}%></tr>
+        <% });%>
+        </tbody>
     </table>
 
 </div>
-<a href="#Export">Export</a>
+
 <div id="recordView">
    <div id="documentViewer"></div>
    <div id="DocumentMetadata"></div>

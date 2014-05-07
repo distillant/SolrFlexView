@@ -33,7 +33,8 @@ define(function (require) {
             "cores": "showCoreList",
             "AdvancedSearch/:coreName": "AdvancedSearchEntry",
             "showVideo": "showVideo",
-            "CoreCharts": "CoreCharts"
+            "CoreCharts": "CoreCharts",
+            "document/:core/:uniqueField/:key": "viewRecord",
 
         },
         initialize: function (options){
@@ -95,6 +96,30 @@ define(function (require) {
                 var view = new AdvancedSearchView({coreName:coreName });
                 self.appView.showView(view);
                 //view.render();
+            });
+        },
+        viewRecord:function(core,uniqueField,key)
+        {
+            require(['app/models/Record','app/views/Record'],function (Record, RecordView){
+
+                var options ={
+                    core: core,
+                    uniqueField:uniqueField,
+                    keyId : key
+                };
+                var record = new Record(options);
+                var recordView=new RecordView({model :record});
+                record.fetch({success:function(){
+                    //$('#content').html(recordView.render().el);
+                    var $recordViewHTML =recordView.render().$el.html();
+                    $("#recordView").html($recordViewHTML);
+                    /*
+                     var w = window.open();
+                     var html = $("#toNewWindow").html($recordViewHTML);
+
+                     w.document.write();
+                     w.document.close();*/
+                }});
             });
         },
         queryResultsReturn: function(data)
