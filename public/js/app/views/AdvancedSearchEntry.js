@@ -99,6 +99,7 @@ define(function (require) {
             solrSearch.uniqueField= this.uniqueField;
             solrSearch.searchArray=this.collection.toJSON();
             solrSearch.displayFields = $("#AdvancedSearch #displayFields").val();
+            solrSearch.displayFields.push(solrSearch.uniqueField); //make sure the key field is added
 
             var self=this;
             router.solrSearch =solrSearch;
