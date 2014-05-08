@@ -109,10 +109,17 @@ define(function (require) {
                 };
                 var record = new Record(options);
                 var recordView=new RecordView({model :record});
+
                 record.fetch({success:function(){
                     //$('#content').html(recordView.render().el);
                     var $recordViewHTML =recordView.render().$el.html();
                     $("#recordView").html($recordViewHTML);
+                    $("#queryResultsView").hide();
+                    $("#lnkShowQueryResults").show();
+                    $("#lnkShowQueryResults").on("click",function(event){
+                        event.preventDefault();
+                        $("#queryResultsView").show();
+                    });
                     /*
                      var w = window.open();
                      var html = $("#toNewWindow").html($recordViewHTML);
@@ -167,12 +174,10 @@ define(function (require) {
                 queryResults.meta('itemStartNum',data.response.start);
                 queryResults.meta('rowsRequested',data.response.docs.length);
                 queryResults.meta('core',router.solrSearch.core);
-               // queryResults.meta('uniqueField',this.uniqueField);
+                // queryResults.meta('uniqueField',this.uniqueField);
                 queryResults.meta('uniqueField',router.solrSearch.uniqueField); //temporary
                 var queryResultsView =new QueryResultsView({collection:queryResults});
                 $('#content').html( queryResultsView.render().$el);
-
-
             });
         }
     });

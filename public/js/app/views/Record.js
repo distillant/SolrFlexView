@@ -7,11 +7,11 @@ define(function (require) {
 
     var $           = require('jquery'),
         _           = require('underscore'),
-        Backbone    = require('backbone'),
         tpl         = require('text!tpl/TiffViewer.html'),
+        bootstrap   = require('/bootstrap/js/bootstrap.min.js'),
         ImageCollection         = require('app/models/images'),
         template = _.template(tpl);
-
+    require('backbone');
     return Backbone.View.extend({
         initialize:function(){
 

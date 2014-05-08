@@ -32,13 +32,14 @@ body {
 #queryResultsView
 {
     overflow-y:scroll;
-    width:70%;
+    width:100%;
     resize: horizontal;
-    float: left;
+
     font-size: 10pt;
 }
-#recordView{
-    float: left;
+
+
+#lnkShowQueryResults
+{
+    display:none;
 }
-
-

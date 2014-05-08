@@ -3,7 +3,7 @@ html, body {
 }
 #mainViewPane
 {
-    float:left;
+
     height:100%;
     resize: horizontal;
     width:800px;
@@ -11,7 +11,7 @@ html, body {
 
 #tiffSidebar
 {
-    float:left;
+
     background-color:lightgrey;
     width: 200px;
     overflow-y:auto;
