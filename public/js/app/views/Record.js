@@ -19,23 +19,12 @@ define(function (require) {
 
         render: function () {
 
-            this.$el.html(template);
-            this.addRecordData();
+            this.$el.html(template({data:this.model.toJSON()}));
+            
             this.addImages();
             return this;
         },
-        addRecordData: function () {
-            var recordTableHtml="<table id='RecordTable'>";
-            var items=this.model.attributes;
-            for(var item in items)
-            {
-                var value= items[item].toString();
-                recordTableHtml +="<tr><td>"+item.toString()+"</td><td>"+value+"</td></tr>";
-            }
-            recordTableHtml+="</table>"
 
-            this.$el.find("#databar").html(recordTableHtml);
-        },
         addImages:function(){
 
             var imageCollection =new ImageCollection([],{
