@@ -11,7 +11,7 @@ html, body {
 
 #tiffSidebar
 {
-
+    float:left;
     background-color:lightgrey;
     width: 200px;
     overflow-y:auto;
