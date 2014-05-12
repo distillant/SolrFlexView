@@ -18,6 +18,7 @@
 </ul>
 <div class="tab-content">
     <div id="tiffViewer" class="tab-pane fade">
+
         <div id="tiffSidebar">
             <!--
             <div class="mini-page-item">
@@ -31,6 +32,13 @@
 
             </div>
             -->
+            <% console.log(images);
+            for(var x=0; x< images.length; x++){
+                var image =images[x]; %>
+                <div class='mini-page-item'><div class='preview-page-num'><%=image.Bates%>
+                </div><div class='mini-page-view'><img src='/Image?file=<%=image.Full_DOS_Path%>'></div></div>
+            <%}%>
+
         </div>
         <div id="mainViewPane">
             <div id="tiffControlBar">
@@ -53,7 +61,15 @@
                 <div class="icon-repeat" alt="rotate"></div>
             </div>
             <div id="tiffViewSpace">
-                <img >
+                <% if (images.length >0)
+                {   //display first page%>
+                <img src="/Image?file=<%=images[0].Full_DOS_Path%>" >
+                <%}
+                else{%>
+                    <H3>No images available for this item </H3>
+                <%}
+                %>
+
             </div>
         </div>
 

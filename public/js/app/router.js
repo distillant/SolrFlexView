@@ -108,24 +108,18 @@ define(function (require) {
                     keyId : key
                 };
                 var record = new Record(options);
-                var recordView=new RecordView({model :record});
+                var recordView=new RecordView({model :record, el:"#recordView"});
 
                 record.fetch({success:function(){
-                    //$('#content').html(recordView.render().el);
-                    var $recordViewHTML =recordView.render().$el.html();
-                    $("#recordView").html($recordViewHTML);
+
+                    recordView.render();
                     $("#queryResultsView").hide();
                     $("#lnkShowQueryResults").show();
                     $("#lnkShowQueryResults").on("click",function(event){
                         event.preventDefault();
                         $("#queryResultsView").show();
                     });
-                    /*
-                     var w = window.open();
-                     var html = $("#toNewWindow").html($recordViewHTML);
 
-                     w.document.write();
-                     w.document.close();*/
                 }});
             });
         },

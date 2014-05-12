@@ -19,8 +19,7 @@ define(function (require) {
 
         render: function () {
 
-            this.$el.html(template({data:this.model.toJSON()}));
-            
+
             this.addImages();
             return this;
         },
@@ -34,30 +33,17 @@ define(function (require) {
             });
             this.imageCollection=imageCollection;
             var self=this;
-            imageCollection.fetch().complete(
-                function()
-                {   console.log("display what self.imageCollection is after fetch() below");
-                    console.log(self.imageCollection);
-                    if (self.imageCollection.length >0)
-                    {   //display first page
-                        $("#tiffViewSpace img").attr("src","/Image?file="+self.imageCollection.models[0].get('Full_DOS_Path'));
-                    }
-                    for(var x=0; x<self.imageCollection.length; x++)
-                    {
-                        var model =self.imageCollection.models[x];
+            imageCollection.fetch().complete(function(imageData)
+            {
+                var options={
+                    data:self.model.toJSON(),
+                        images: (typeof(imageData.toJSON) =="undefined") ? [] : imageData.toJSON()
+                };
+                console.log("showing options")
+                console.log(options);
+                self.$el.html(template(options));
 
-                        var imagePath= "/Image?file="+model.get('Full_DOS_Path');
-
-                        var pageHTML = "<div class='mini-page-item'><div class='preview-page-num'>"+model.get('Bates')+
-                            "</div><div class='mini-page-view'><img src='" +imagePath + "'></div></div>";
-                        self.$el.find("#tiffSidebar").append(pageHTML);
-                        $("#tiffSidebar").append(pageHTML);
-                    }
-
-                }
-
-
-            )
+            })
 
         }
     });
