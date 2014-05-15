@@ -33,7 +33,7 @@ define(function (require) {
             });
             this.imageCollection=imageCollection;
             var self=this;
-            imageCollection.fetch().complete(function(imageData)
+            imageCollection.fetch({success:function(imageData, respons, RespOptions)
             {
                 var options={
                     data:self.model.toJSON(),
@@ -43,7 +43,7 @@ define(function (require) {
                 console.log(options);
                 self.$el.html(template(options));
 
-            })
+            }});
 
         }
     });
