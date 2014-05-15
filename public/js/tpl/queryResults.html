@@ -1,7 +1,7 @@
 <div><span id="serverMessages" >
 <%console.log(meta); %>
     Hits: <%=meta.totalHits%> Results
-<%=meta.itemStartNum%> to <%=meta.rowsRequested%>
+<%=meta.itemStartNum+1%> to <%=meta.itemStartNum + meta.rowsRequested%>
 
 
 </span>

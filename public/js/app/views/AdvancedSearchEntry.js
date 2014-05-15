@@ -11,7 +11,7 @@ define(function (require) {
         tpl         = require('text!tpl/AdvancedSearch.html'),
         SearchCriteriaItems= require('app/models/SearchCriteriaItem'),
         SearchCriteriaItemView= require('app/views/SearchCriteriaItem'),
-
+        SolrSearch=require('app/models/SolrSearch'),
         Fields=require("app/models/Fields"),
         template = _.template(tpl);
 
@@ -66,8 +66,10 @@ define(function (require) {
                 }
             });
         },
-        initialize:function(){
+        initialize:function(options){
+            this.options=options;
             return this;
+
 
         },
         render:function()
@@ -94,19 +96,16 @@ define(function (require) {
 
         startQuery:function(){
 
-            var solrSearch={};
-            solrSearch.core= this.options.coreName;
-            solrSearch.uniqueField= this.uniqueField;
-            solrSearch.searchArray=this.collection.toJSON();
-            solrSearch.displayFields = $("#AdvancedSearch #displayFields").val();
-            solrSearch.displayFields.push(solrSearch.uniqueField); //make sure the key field is added
+            var solrSearch=new SolrSearch({
+                core:this.options.coreName,
+                uniqueField:this.uniqueField,
+                searchArray:this.collection.toJSON(),
+                displayFields:$("#AdvancedSearch #displayFields").val()
 
-            var self=this;
-            router.solrSearch =solrSearch;
-            $.post("AdvancedSearch", solrSearch, function(data, textStatus, jqXHR){
-                router.queryResultsReturn(data );
-            } );
-
+            });
+            router.solrSearch=solrSearch;
+            self=this;
+            solrSearch.fetch();
         }
 
     });
