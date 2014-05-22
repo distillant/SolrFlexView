@@ -49,3 +49,116 @@ export request example
 4) add cancel ability
 5) add additional export functionality.
 6)
+
+*/
+
+exports.simpleExport = function(req, res){
+
+    var qParams=req.body;
+    if (typeof(qParams.core) =="undefined")
+    {
+        res.setHeader("Content-Type", "text/html");
+        res.write("error: database core name was not included in request");
+        res.end();
+        return;
+    }
+    var core=qParams.core;
+    var advancedQuery={};
+    var start=qParams.start || 0;
+    var end =qParams.end || 50;
+    for (x =0;  x < qParams.searchArray.length; x++)
+    {
+        var fieldName=qParams.searchArray[x].fieldName;
+        var searchTerms=qParams.searchArray[x].searchTerms;
+        advancedQuery[fieldName]="(" +searchTerms + ")";
+    }
+    var displayFields="";
+    for(x=0;x<qParams.displayFields.length;x++)
+    {
+        //builds string for display fields (fl) parameter
+        displayFields += x>0?  ",":"";
+        displayFields+=qParams.displayFields[x];
+    }
+    var responseHandler=function responseHandler(err,obj)
+    {
+        if(err){
+            res.setHeader("Content-Type", "text/html");
+            res.write(JSON.stringify(err));
+            res.end();
+            console.log(err);
+        }
+        else{
+            res.setHeader("Content-Type", "text/html");
+            res.write(JSON.stringify(obj)); //send entire object to include start & end for paging
+            res.end();
+
+        }
+    }
+
+    GetCSV(core,advancedQuery,displayFields,start,end, responseHandler );
+}
+
+var serialize = function(obj, prefix) {
+    var str = [];
+    for(var p in obj) {
+        var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+        str.push(typeof v == "object" ?
+            serialize(v, k) :
+            encodeURIComponent(k) + "=" + encodeURIComponent(v));
+    }
+    return str.join("&");
+}
+var GetCSV=function(core,advancedQuery,displayFields,start,end, responseHandler){
+    http://localhost:8983/solr/collection1/select?q=id%3A*&start=0&rows=10&fl=id%2Ccat%2Ccategory%2Ccomments%2Ccontent%2Ccontent_type%2Cdescription%2Cfeatures&wt=csv&indent=true
+    console.log("serializng query params");
+    console.log(serialize(advancedQuery));
+
+    console.log("displayFields");
+    console.log(displayFields);
+    console.log("serializng displayFields");
+    console.log(serialize(displayFields));
+
+/*
+    var http = require('http');
+
+    var options = {
+        host:  AppConfig.solrIP,
+        port: AppConfig.solrPort
+    };
+
+    options.path= AppConfig.solrDirectory +'/'core'/'?wt=csv';
+
+    var callback = function(response) {
+        var str = '';
+
+        //another chunk of data has been recieved, so append it to `str`
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+
+            res.send(str);
+
+        });
+        response.on('error', function(e) {
+            console.log('problem with request: ' + e.message);
+            res.send("{error: \"error while attempting to retrive corelist from SOLR: "+e.message+ "\"}");
+
+        });
+    };
+    try
+    {
+        http.request(options, callback).end();
+
+    }
+    catch(err)
+    {
+        console.log("error");
+        console.log(err);
+
+    }
+    //  res.send("respond with a resource");
+    */
+};

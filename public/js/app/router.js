@@ -35,8 +35,10 @@ define(function (require) {
             "showVideo": "showVideo",
             "CoreCharts": "CoreCharts",
             "document/:core/:uniqueField/:key": "viewRecord",
+            "Export": "Export"
 
         },
+
         initialize: function (options){
             this.appView = options.appView
 
@@ -123,6 +125,9 @@ define(function (require) {
                 }});
             });
         },
+        Export:function(){
+            Search=this.solrSearch
+        }
 
     });
 
