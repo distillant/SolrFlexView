@@ -11,7 +11,7 @@ var testfeeds = require('./routes/testFeeds');
 var CCTiffLookup = require('./routes/CCTiffLookup');
 var image = require('./routes/Image');
 var OCR = require('./routes/OCR');
-
+var exporter =require('./routes/Export');
 var http = require('http');
 var path = require('path');
 
@@ -62,6 +62,7 @@ else
     app.get('/Images/:core/:uniqueField/:key', CCTiffLookup.getTiffsInfo);
     app.get('/Image', image.getPNG);
     app.get('/OCR/:core/:key', OCR.GetSQLOCR);
+    app.post('/Export', exporter.simpleExport);
 }
 
 //app.get('/', routes.index);
