@@ -14,8 +14,14 @@ exports.cores=function(req,res)
         var options = {
         host:  AppConfig.solrIP,
         port: AppConfig.solrPort,
-        path: AppConfig.solrDirectory +'/admin/cores?wt=json'
+        path: AppConfig.solrDirectory +'/admin/cores?wt=json',
+	
+	auth: AppConfig.solrUser+":"+AppConfig.solrPassword
+	/*headers:{
+	     'Authorization': 'Basic' +new Buffer(AppConfig.solrUser+":"+AppConfig.solrPassword).toString('base64')
+	}*/
     };
+	console.log(options);
 
     var callback = function(response) {
         var str = '';
@@ -27,6 +33,8 @@ exports.cores=function(req,res)
 
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
+	try
+	{
             var lukeCoresData=JSON.parse(str);
             var coresArray =[];
            for  (var core in lukeCoresData.status)
@@ -34,7 +42,12 @@ exports.cores=function(req,res)
                coresArray.push( lukeCoresData.status[core]);
            }
             res.send(JSON.stringify(coresArray));
-
+	}
+	catch(err)
+	{
+		console.log(err);
+		console.log(str);
+	}
         });
         response.on('error', function(e) {
             console.log('problem with request: ' + e.message);
@@ -65,7 +78,8 @@ exports.fields=function(req,res)
     var options = {
         host:  AppConfig.solrIP,
         port: AppConfig.solrPort,
-        path: AppConfig.solrDirectory +'/'+ coreName+'/admin/luke?show=schema&wt=json'
+        path: AppConfig.solrDirectory +'/'+ coreName+'/admin/luke?show=schema&wt=json',	
+	auth: AppConfig.solrUser+":"+AppConfig.solrPassword
 
     };
 

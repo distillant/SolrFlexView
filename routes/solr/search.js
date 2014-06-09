@@ -16,7 +16,9 @@ var queryRequestCSV = function(params,callback){
     var options = {
         host : params.host,
         port : params.port,
-        path : params.fullPath
+        path : params.fullPath,
+        auth: AppConfig.solrUser+":"+AppConfig.solrPassword
+
     };
 
     if(params.authorization){
@@ -76,7 +78,7 @@ var ExportCSV = function(query,callback){
         .join('/');
     queryRequestCSV(this.options,callback);
     return self;
-}
+};
 
 exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback)
 {
@@ -84,10 +86,9 @@ exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback
         var solrIP=global.AppConfig.solrIP;
         var solrPort=global.AppConfig.solrPort;
         var solrDirectory=global.AppConfig.solrDirectory;
-
-
         var client = solr.createClient(solrIP,solrPort,core,solrDirectory);
-        client.ExportCSV=ExportCSV;
+	client.basicAuth(global.AppConfig.solrUser,global.AppConfig.solrPassword);
+
         var query = client.createQuery()
             .q(searchCriteria)
             .start(start)
@@ -96,12 +97,15 @@ exports.SolrSearch=function(core,searchCriteria,displayFields,start,end,callback
         //filter return fields if displayFields specified.
         if (displayFields)
             query.fl(displayFields);
-        //client.search(query, function(err,obj){callback(err,obj);});
+        client.search(query, function(err,obj){callback(err,obj);});
+
 /*
+ client.ExportCSV=ExportCSV;
+
         client.ExportCSV(query, function(err,obj){
             console.log(obj);
             console.log(err);
             //callback(err,obj);
         });
 */
-}
+};
