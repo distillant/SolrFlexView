@@ -40,7 +40,7 @@ define(function (require) {
         },
 
         initialize: function (options){
-            this.appView = options.appView
+            this.appView = options.appView;
 
         },
         solrSearch:{}, //this will store the solrSearch object
@@ -126,7 +126,12 @@ define(function (require) {
             });
         },
         Export:function(){
-            Search=this.solrSearch
+            var self=this;
+            require(['app/models/Export'],function (ExportModel) {
+                var exportModel = new ExportModel({model: self.solrSearch.toJSON()});
+                exportModel.set("end",router.queryResults.meta("totalHits"));
+                exportModel.fetch();
+            });
         }
 
     });

@@ -1,16 +1,13 @@
 require.config({
 
     baseUrl: 'js/lib',
-
     paths: {
         app: '../app',
         tpl: '../tpl'
     },
-
     map: {
        
     },
-
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],

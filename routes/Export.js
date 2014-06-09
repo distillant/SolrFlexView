@@ -51,9 +51,17 @@ export request example
 6)
 
 */
+var SolrExport=require("./solr/search").SolrExport;
+
 
 exports.simpleExport = function(req, res){
-
+    var delimeters ={
+        header: "true",
+        separator: String.fromCharCode(254),
+        encapsulator: String.fromCharCode(255),
+        null: "",
+        newline: null
+    };
     var qParams=req.body;
     if (typeof(qParams.core) =="undefined")
     {
@@ -64,21 +72,24 @@ exports.simpleExport = function(req, res){
     }
     var core=qParams.core;
     var advancedQuery={};
-    var start=qParams.start || 0;
+    var start=qParams.start= 0;
     var end =qParams.end || 50;
-    for (x =0;  x < qParams.searchArray.length; x++)
+    for (var x =0;  x < qParams.searchArray.length; x++)
     {
         var fieldName=qParams.searchArray[x].fieldName;
         var searchTerms=qParams.searchArray[x].searchTerms;
         advancedQuery[fieldName]="(" +searchTerms + ")";
     }
     var displayFields="";
-    for(x=0;x<qParams.displayFields.length;x++)
+    for(var x=0; x<qParams.displayFields.length; x++)
     {
         //builds string for display fields (fl) parameter
         displayFields += x>0?  ",":"";
         displayFields+=qParams.displayFields[x];
     }
+   // var now=new Date();
+    var outputFilePath=global.AppConfig.defaultExportDir+"Export" +  Math.random().toString() +".dat";
+
     var responseHandler=function responseHandler(err,obj)
     {
         if(err){
@@ -88,16 +99,29 @@ exports.simpleExport = function(req, res){
             console.log(err);
         }
         else{
+
+           // delimeters.header="false";
+          /*  fs.appendFileSync(outputFilePath, obj, function(err)
+            {  if (err) throw err;}
+            );*/
             res.setHeader("Content-Type", "text/html");
             res.write(JSON.stringify(obj)); //send entire object to include start & end for paging
             res.end();
-
         }
-    }
-
-    GetCSV(core,advancedQuery,displayFields,start,end, responseHandler );
-}
-
+    };
+    var setSize=50;
+    //for (var start=0; start < end; start += setSize)
+   // {
+        SolrExport(core,advancedQuery,displayFields,start,end,delimeters, responseHandler );
+   // }
+    /*
+    res.setHeader("Content-Type", "text/html");
+    res.write(JSON.stringify("completed export")); //send entire object to include start & end for paging
+    res.end();
+    */
+    //SolrExport(core,advancedQuery,displayFields,start,end,delimeters, responseHandler  );
+};
+/*
 var serialize = function(obj, prefix) {
     var str = [];
     for(var p in obj) {
@@ -117,7 +141,7 @@ var GetCSV=function(core,advancedQuery,displayFields,start,end, responseHandler)
     console.log(displayFields);
     console.log("serializng displayFields");
     console.log(serialize(displayFields));
-
+*/
 /*
     var http = require('http');
 
@@ -160,5 +184,5 @@ var GetCSV=function(core,advancedQuery,displayFields,start,end, responseHandler)
 
     }
     //  res.send("respond with a resource");
-    */
-};
+
+};*/

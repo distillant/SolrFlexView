@@ -38,11 +38,12 @@ define(function (require) {
                     return;
                 }
                 data=JSON.parse(data);
-                if (data.name) //catch errors
+                if (data.message) //catch errors
                 {
-                    self.set("error",data.name +" : "+data.message || "");
+                    alert(data.message)
                     return;
                 }
+                /*
                 // this.queryResultsReturn(data);
 
                 //creating model with dynamic default properties off of display fields from search request
@@ -61,20 +62,21 @@ define(function (require) {
                 queryResults.add(data.response.docs);
                 router.queryResults=queryResults;
                 self.trigger('newResultsReady');
-
+                */
             } );
         },
         events:{
             "newResultsReady":"queryResultsReturn"
         },
         initialize: function (options) {
-
-            this.core= options.coreName;
+            options=options.model;
+            this.core= options.core;
             this.uniqueField= options.uniqueField;
             this.searchArray=options.searchArray;
             this.displayFields=options.displayFields;
             this.displayFields.push(this.uniqueField); //make sure the key field is added
             this.queryResults={};
+            this.set(options);
             this.on('newResultsReady', this.queryResultsReturn, this );
         },
         createDefaults: function()
