@@ -16,4 +16,5 @@ tests/samplefeeds/*
 npm-debug.log
 node_modules
 AppConfig.js
+appConfigDev.js
 
