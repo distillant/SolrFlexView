@@ -3,17 +3,10 @@
  */
 
 
-/*********customization by Patrick***********
- *
- *
- *
- *
- */
 var http=require('http');
 var solr = require('solr-client');
 var  fs=require('fs');
 solr.SolrError=require('solr-client/lib/error/solr-error');
-
 
 var queryRequestCSV = function(params,callback){
     var options = {

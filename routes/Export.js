@@ -52,7 +52,7 @@ export request example
 
 */
 var SolrExport=require("./solr/search").SolrExport;
-
+var SolrSearch=require("./solr/search").SolrExport;
 
 exports.simpleExport = function(req, res){
     var delimeters ={
@@ -71,6 +71,7 @@ exports.simpleExport = function(req, res){
         return;
     }
     var core=qParams.core;
+    var uniqueField=qParams.uniqueField;
     var advancedQuery={};
     var start=qParams.start= 0;
     var end =qParams.end || 50;
@@ -109,10 +110,16 @@ exports.simpleExport = function(req, res){
             res.end();
         }
     };
-    var setSize=50;
-    //for (var start=0; start < end; start += setSize)
-   // {
+
         SolrExport(core,advancedQuery,displayFields,start,end,delimeters, responseHandler );
+        SolrSearch(core,advancedQuery,"uniqueField",start,end, function(err,obj){ console.log(err),console.log(obj)})
+
+    var setSize=50;
+
+
+    //for (var start=0; start < end; start += setSize)
+    // {
+
    // }
     /*
     res.setHeader("Content-Type", "text/html");
@@ -121,6 +128,10 @@ exports.simpleExport = function(req, res){
     */
     //SolrExport(core,advancedQuery,displayFields,start,end,delimeters, responseHandler  );
 };
+
+
+
+}
 /*
 var serialize = function(obj, prefix) {
     var str = [];
