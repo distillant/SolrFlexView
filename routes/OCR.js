@@ -9,9 +9,9 @@ var TDSConnection = require('tedious').Connection;
 var TDSRequest = require('tedious').Request;
 var TDSTYPES = require('tedious').TYPES;
 var config = {
-    server:  'AGI155', //this will get overridden later
-    userName: 'sa',
-    password: 'unknown'
+    server:  AppConfig.SQLServer, //this will get overridden later
+    userName: AppConfig.SQLUserName,
+    password: AppConfig.SQLPassword
     ,options: {
         tdsVersion: '7_1', //this is for sql 2000.
         debug: {
