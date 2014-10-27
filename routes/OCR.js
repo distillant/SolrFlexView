@@ -40,8 +40,6 @@ exports.GetSQLOCR = function(req,res)
         var table= sqlDb[core].db+".."+ sqlDb[core].OCRTable;
         //override SQL server properties using the one from the config file for this core;
         config.server=sqlDb[core].server;
-       // config.userName=global.AppConfig.SQLUserName;
-       // config.password=global.AppConfig.SQLPassword;
     }
     else
     {
@@ -75,46 +73,16 @@ function executeStatement(tdsconnection,testCommand, resp) {
             console.log(err);
         } else {
             console.log(rowCount + ' rows');
-
         }
-
-
     });
 
     tdsrequest.addOutputParameter('OCR', TDSTYPES.NText);
-
 
     tdsrequest.on('returnValue', function(parameterName, value, metadata) {
         console.log(parameterName + ' = ' + value);      // number = 42
         // string = qaz
     });
-    /*
-    tdsrequest.on('row', function(columns) {
 
-        columns.forEach(function(column) {
-            {
-                returnData1[column.metadata.colName]=column.value;
-
-                console.log(column.metadata.colName);
-                console.log(column.value);
-            }
-
-        });
-
-    });
-
-
-
-    tdsrequest.on('done', function(rowCount, more) {
-        console.log(rowCount + ' rows returned');
-        console.log( new Date().toISOString());
-        resp.setHeader("Content-Type", "application/json");
-        resp.write(JSON.stringify(returnData1));
-        resp.end();
-
-
-    });
-*/
     // In SQL Server 2000 you may need: connection.execSqlBatch(tdsrequest);
 //    tdsconnection.execSql(tdsrequest);
 
@@ -122,9 +90,3 @@ function executeStatement(tdsconnection,testCommand, resp) {
     tdsconnection.execSqlBatch(tdsrequest);
 
 }
-/*
- var cnstr = "Data Source=agi55;Initial Catalog=DGSInventory;User ID=sa;Password=unknown";
- var sqlcmd = "SELECT top 20 [EmpID] as 'Value', [EmployeeName] as 'Description' " +
- "FROM [DGSInventory].[dbo].[webEmployeeIDList] " +
- "where EmployeeName like ' " + prefixText + "%'";
- */
